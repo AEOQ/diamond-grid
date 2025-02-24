@@ -36,6 +36,5 @@
     <div>20</div>
 </diamond-grid>
 <script>
-  customElements.whenDefined('app-drawer').then(() => Q('diamond-grid', dg => dg.hidden = false));
   fetch(location.href).then(resp => resp.text()).then(html => Q('textarea').textContent = html)
 </script>
