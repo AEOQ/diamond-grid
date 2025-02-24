@@ -1,9 +1,27 @@
 import {A,E,O,Q} from '../AEOQ.mjs';
-customElements.define('diamond-grid', class extends HTMLElement {
+const tagName = 'diamond-grid';
+Q('head').append(E('style', {id: tagName}, `
+    ${tagName}:not(:defined) {
+        opacity:0;
+    }
+    ${tagName} .shape {
+        width:50%; height:100%;
+
+        &:nth-child(1) {
+            float:left;    
+            shape-outside:polygon(0% 0%,100% 0%,0% 50%,100% 100%,0% 100%);
+        }
+        &:nth-child(2) {
+            float:right; 
+            shape-outside:polygon(100% 0%,0% 0%,100% 50%,0% 100%,100% 100%);
+        }
+    }`
+));
+customElements.define(tagName, class extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({mode: 'open'}).append(
-            E('link', {rel: 'stylesheet', href: '//aeoq.github.io/diamond-grid/diamond-grid.css'}),
+            E('link', {rel: 'stylesheet', href: `https://aeoq.github.io/${tagName}/${tagName}.css`}),
             E('slot', {onslotchange: (ev) => [this.shape(ev), this.rearrange(ev)]})
         );
         new ResizeObserver(([entry]) => {
@@ -15,23 +33,8 @@ customElements.define('diamond-grid', class extends HTMLElement {
     }
     #oldWidth;
     connectedCallback() {
-        Q('#diamond-grid') ?? Q('head').append(E('style', {id: 'diamond-grid'}, `
-            diamond-grid .shape {
-                width:50%; height:100%;
-
-                &:nth-child(1) {
-                    float:left;    
-                    shape-outside:polygon(0% 0%,100% 0%,0% 50%,100% 100%,0% 100%);
-                }
-                &:nth-child(2) {
-                    float:right; 
-                    shape-outside:polygon(100% 0%,0% 0%,100% 50%,0% 100%,100% 100%);
-                }
-            }`
-        ));
         isNaN(new E(this).get('--side')) && new A({'--side': '20em'}).apply(this);
         isNaN(new E(this).get('--gap')) && new A({'--gap': '.5em'}).apply(this);
-        this.hidden = false;
     }
     shape (ev) {
         ev.target.assignedElements().forEach(el => el.Q('shape') || el.prepend(...[0,0].map(_ => E('span', {classList: 'shape'}))));
