@@ -1,9 +1,6 @@
 import {A,E,O,Q} from '../AEOQ.mjs';
 const tagName = 'diamond-grid';
 Q('head').append(E('style', {id: tagName}, `
-    ${tagName} {
-        opacity:0;
-    }
     ${tagName} .shape {
         width:50%; height:100%;
 
@@ -35,6 +32,7 @@ customElements.define(tagName, class extends HTMLElement {
     connectedCallback() {
         isNaN(new E(this).get('--side')) && new A({'--side': '20em'}).apply(this);
         isNaN(new E(this).get('--gap')) && new A({'--gap': '.5em'}).apply(this);
+        setTimeout(() => this.hidden = false, 1000);
     }
     shape (ev) {
         ev.target.assignedElements().forEach(el => el.Q('shape') || el.prepend(...[0,0].map(_ => E('span', {classList: 'shape'}))));

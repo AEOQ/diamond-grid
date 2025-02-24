@@ -3,7 +3,6 @@
     display:grid; grid-template-columns:repeat(auto-fill,var(--side)); justify-content:center;
     gap:var(--gap);
     --shift:calc(var(--side)/4 + var(--gap)/4);
-    opacity:1; transition:opacity .5s;
     
     ::slotted(*) {
         text-align:center;
@@ -12,8 +11,5 @@
         margin:calc(var(--shift)*-1) 0;
         transform:translate(calc(var(--shift)*var(--factor,0)));
         transition:transform .5s,margin .5s;
-    }
-    ::slotted(*) .shape {
-        background:green;
     }
 }
