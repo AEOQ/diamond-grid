@@ -4,7 +4,6 @@
     gap:var(--gap);
     --shift:calc(var(--side)/4 + var(--gap)/4);
 
-    &([hidden]) {display:none;}
     ::slotted(*) {
         text-align:center;
         width:var(--side); height:var(--side);
