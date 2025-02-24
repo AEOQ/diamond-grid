@@ -3,7 +3,7 @@ customElements.define('diamond-grid', class extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({mode: 'open'}).append(
-            E('link', {rel: 'stylesheet', href: './diamond-grid.css'}), //'//aeoq.github.io/diamond-grid.css'}),
+            E('link', {rel: 'stylesheet', href: '//aeoq.github.io/diamond-grid.css'}),
             E('slot', {onslotchange: (ev) => [this.shape(ev), this.rearrange(ev)]})
         );
         new ResizeObserver(([entry]) => {
