@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<title>Diamond Grid</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<script src="/AEOQ.js"></script>
+<script src="diamond-grid.js" type="module"></script>
+<style>
+    diamond-grid div {background:yellow;}
+    textarea {width:100%;height:40em;}
+</style>
+<details>
+    <summary>View source</summary>
+    <textarea></textarea>
+</details>
+<diamond-grid>
+    <div>owairejg stoirj oer jioaej to ragsjgwag  aw oreitsrjhpeawj pr  PWT JGPAETIJIPSRHA JEP </div>
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+    <div>5</div>
+    <div>6</div>
+    <div>7</div>
+    <div>8</div>
+    <div>9</div>
+    <div>10</div>
+    <div>11</div>
+    <div>12</div>
+    <div>13</div>
+    <div>14</div>
+    <div>15</div>
+    <div>16</div>
+    <div>17</div>
+    <div>18</div>
+    <div>19</div>
+    <div>20</div>
+</diamond-grid>
+<script>
+    fetch(location.href).then(resp => resp.text()).then(html => Q('textarea').textContent = html)
+</script>
