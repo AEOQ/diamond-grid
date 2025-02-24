@@ -5,7 +5,6 @@
 <script src="/AEOQ.js"></script>
 <script src="diamond-grid.js" type="module"></script>
 <style>
-    diamond-grid:not(:defined) {opacity:0;}
     diamond-grid div {background:yellow;}
     textarea {width:100%;height:40em;}
 </style>
@@ -13,7 +12,7 @@
     <summary>View source</summary>
     <textarea></textarea>
 </details>
-<diamond-grid>
+<diamond-grid hidden>
     <div>owairejg stoirj oer jioaej to ragsjgwag  aw oreitsrjhpeawj pr  PWT JGPAETIJIPSRHA JEP </div>
     <div>1</div>
     <div>2</div>
@@ -37,5 +36,6 @@
     <div>20</div>
 </diamond-grid>
 <script>
-    fetch(location.href).then(resp => resp.text()).then(html => Q('textarea').textContent = html)
+  customElements.whenDefined('app-drawer').then(() => Q('diamond-grid', dg => dg.hidden = false));
+  fetch(location.href).then(resp => resp.text()).then(html => Q('textarea').textContent = html)
 </script>
