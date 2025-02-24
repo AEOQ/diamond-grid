@@ -31,6 +31,7 @@ customElements.define('diamond-grid', class extends HTMLElement {
         ));
         isNaN(new E(this).get('--side')) && new A({'--side': '20em'}).apply(this);
         isNaN(new E(this).get('--gap')) && new A({'--gap': '.5em'}).apply(this);
+        this.hidden = false;
     }
     shape (ev) {
         ev.target.assignedElements().forEach(el => el.Q('shape') || el.prepend(...[0,0].map(_ => E('span', {classList: 'shape'}))));
