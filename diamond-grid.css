@@ -4,6 +4,7 @@
     gap:var(--gap);
     --shift:calc(var(--side)/4 + var(--gap)/4);
 
+    &:not(:defined) {opacity:0;}
     ::slotted(*) {
         text-align:center;
         width:var(--side); height:var(--side);
@@ -14,15 +15,5 @@
     }
     ::slotted(*) .shape {
         background:green;
-    }
-    .shape:nth-child(1) {
-        float:left; 
-        width:50%; height:100%;
-        shape-outside:polygon(0% 0%,100% 0%,0% 50%,100% 100%,0% 100%);
-    }
-    .shape:nth-child(2) {
-        float:right; 
-        width:50%; height:100%;
-        shape-outside:polygon(100% 0%,0% 0%,100% 50%,0% 100%,100% 100%);
     }
 }
