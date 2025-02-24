@@ -1,7 +1,7 @@
 import {A,E,O,Q} from '../AEOQ.mjs';
 const tagName = 'diamond-grid';
 Q('head').append(E('style', {id: tagName}, `
-    ${tagName}:not(:defined) {
+    ${tagName} {
         opacity:0;
     }
     ${tagName} .shape {
