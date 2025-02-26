@@ -12,4 +12,5 @@
         transform:translate(calc(var(--shift)*var(--factor,0)));
         transition:transform .5s,margin .5s;
     }
+    ::slotted([hidden]) {display:none !important;}
 }
