@@ -2,7 +2,7 @@
 - To prevent FOUC, add the ```hidden``` attribute.
 - Hide your diamonds with the ```hidden``` attribute, so that it triggers recalculation.
 ```html
-<script src="diamond-grid.js" type="module"></script>
+<script src="script.js" type="module"></script>
 <diamond-grid hidden style="--side: 20em; --gap: .5em;">
     <!--Your diamonds-->
     <div>1</div>

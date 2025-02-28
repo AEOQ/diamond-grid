@@ -18,7 +18,7 @@ customElements.define(tagName, class extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({mode: 'open'}).append(
-            E('link', {rel: 'stylesheet', href: `https://aeoq.github.io/${tagName}/${tagName}.css`}),
+            E('link', {rel: 'stylesheet', href: `https://aeoq.github.io/${tagName}/style.css`}),
             E('slot', {onslotchange: (ev) => [this.shape(ev), this.rearrange(ev)]})
         );
         new ResizeObserver(([entry]) => {
