@@ -2,7 +2,6 @@
 <title>Diamond Grid</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<script src="/AEOQ.js"></script>
 <script src="script.js" type="module"></script>
 <style>
     diamond-grid div {background:yellow;display:block;}
@@ -35,6 +34,7 @@
     <div>19</div>
     <div>20</div>
 </diamond-grid>
-<script>
-  fetch(location.href).then(resp => resp.text()).then(html => Q('textarea').textContent = html)
+<script type="module">
+import {A,E,O,Q} from './AEOQ.mjs';
+fetch(location.href).then(resp => resp.text()).then(html => Q('textarea').textContent = html)
 </script>
