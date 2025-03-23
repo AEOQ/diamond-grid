@@ -44,10 +44,10 @@ customElements.define(tagName, class extends HTMLElement {
         items = items.filter(item => !item.hidden);
         if (!items.length) return;
 
-        this.hidden = true;
+        this.style.opacity = 0;
         Promise.all(items.filter(item => item.tagName == 'IMG').map(img => new Promise(res => img.complete ? res() : img.onload = res)))
         .then(() => {
-            this.hidden = false;
+            this.style.opacity = 1;
             let W = this.getBoundingClientRect().width,
                 g = parseFloat(getComputedStyle(this).gap),
                 w = items[0].getBoundingClientRect().width;
