@@ -44,24 +44,27 @@ customElements.define(tagName, class extends HTMLElement {
         items = items.filter(item => !item.hidden);
         if (!items.length) return;
 
-        let W = this.getBoundingClientRect().width,
-            g = parseFloat(getComputedStyle(this).gap),
-            w = items[0].getBoundingClientRect().width;
-        let more = Math.floor((W + g) / (w + g)),
-            less = Math.floor((2 * W - w + g) / 2 / (w + g));
-
-        if (more === less)
-            return items.forEach((item, i) => E(item).set(this.#position[Math.ceil((i + 1) / more) % 2 === 0 ? 'right' : 'left']));
-
-        let n = 1, i;
-        while (items[i = (more + less) * n - less]) {
-            let j = 0;
-            while (j <= more - 1 && items[i + j]) {
-                E(items[i + j]).set(this.#position[j < more - 1 ? 'center' : 'next']);
-                j++;
+        Promise.all(items.filter(item => item.tagName == 'IMG').map(img => new Promise(res => img.complete ? res() : img.onload = res)))
+        .then(() => {
+            let W = this.getBoundingClientRect().width,
+                g = parseFloat(getComputedStyle(this).gap),
+                w = items[0].getBoundingClientRect().width;
+            let more = Math.floor((W + g) / (w + g)),
+                less = Math.floor((2 * W - w + g) / 2 / (w + g));
+    
+            if (more === less)
+                return items.forEach((item, i) => E(item).set(this.#position[Math.ceil((i + 1) / more) % 2 === 0 ? 'right' : 'left']));
+    
+            let n = 1, i;
+            while (items[i = (more + less) * n - less]) {
+                let j = 0;
+                while (j <= more - 1 && items[i + j]) {
+                    E(items[i + j]).set(this.#position[j < more - 1 ? 'center' : 'next']);
+                    j++;
+                }
+                n++;
             }
-            n++;
-        }
+        });
     };
     #position = {
         left: {'--factor': -1},
