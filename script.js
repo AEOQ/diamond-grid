@@ -46,10 +46,7 @@ customElements.define(tagName, class extends HTMLElement {
         items = items.filter(item => !item.hidden);
         if (!items.length) return;
 
-        this.style.visibility = 'hidden';
         await new Promise(res => setTimeout(res));
-        this.style.visibility = 'initial';
-        
         let W = this.getBoundingClientRect().width,
             g = parseFloat(getComputedStyle(this).gap),
             w = items[0].getBoundingClientRect().width;
