@@ -38,35 +38,35 @@ customElements.define(tagName, class extends HTMLElement {
     shape (ev) {
         ev.target.assignedElements().forEach(el => el.Q('shape') || el.prepend(...[0,0].map(_ => E('span', {classList: 'shape'}))));
     }
-    rearrange(ev) {
+    async rearrange(ev) {
         let items = ev?.target.assignedElements() ?? [...this.children];
         items.forEach(item => E(item).set(this.#reset));
         items = items.filter(item => !item.hidden);
         if (!items.length) return;
 
         this.style.visibility = 'hidden';
-        Promise.all(items.filter(item => item.tagName == 'IMG').map(img => new Promise(res => img.complete ? res() : img.onload = res)))
-        .then(() => {
-            this.style.visibility = 'initial';
-            let W = this.getBoundingClientRect().width,
-                g = parseFloat(getComputedStyle(this).gap),
-                w = items[0].getBoundingClientRect().width;
-            let more = Math.floor((W + g) / (w + g)),
-                less = Math.floor((2 * W - w + g) / 2 / (w + g));
-    
-            if (more === less)
-                return items.forEach((item, i) => E(item).set(this.#position[Math.ceil((i + 1) / more) % 2 === 0 ? 'right' : 'left']));
-    
-            let n = 1, i;
-            while (items[i = (more + less) * n - less]) {
-                let j = 0;
-                while (j <= more - 1 && items[i + j]) {
-                    E(items[i + j]).set(this.#position[j < more - 1 ? 'center' : 'next']);
-                    j++;
-                }
-                n++;
+        let img = items[0].tagName == 'IMG' ? items[0] : items[0].Q('img');
+        await img ? new Promise(res => img.complete ? res() : img.onload = res) : Promise.resolve();
+        this.style.visibility = 'initial';
+        
+        let W = this.getBoundingClientRect().width,
+            g = parseFloat(getComputedStyle(this).gap),
+            w = items[0].getBoundingClientRect().width;
+        let more = Math.floor((W + g) / (w + g)),
+            less = Math.floor((2 * W - w + g) / 2 / (w + g));
+
+        if (more === less)
+            return items.forEach((item, i) => E(item).set(this.#position[Math.ceil((i + 1) / more) % 2 === 0 ? 'right' : 'left']));
+
+        let n = 1, i;
+        while (items[i = (more + less) * n - less]) {
+            let j = 0;
+            while (j <= more - 1 && items[i + j]) {
+                E(items[i + j]).set(this.#position[j < more - 1 ? 'center' : 'next']);
+                j++;
             }
-        });
+            n++;
+        }
     };
     #position = {
         left: {'--factor': -1},
