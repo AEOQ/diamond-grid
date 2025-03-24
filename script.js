@@ -17,10 +17,16 @@ Q('head').append(E('style', {id: tagName}, `
 customElements.define(tagName, class extends HTMLElement {
     constructor() {
         super();
+        let link, slot;
         this.attachShadow({mode: 'open'}).append(
-            E('link', {rel: 'stylesheet', href: `https://aeoq.github.io/${tagName}/style.css`}),
-            E('slot', {onslotchange: (ev) => [this.shape(ev), this.rearrange(ev)]})
+            link = E('link', {rel: 'stylesheet', href: `https://aeoq.github.io/${tagName}/style.css`}),
+            slot = E('slot')
         );
+        Promise.all([
+            new Promise(res => link.onload = res),
+            new Promise(res => slot.onslotchange = res)
+        ]).then(() => [this.shape(slot), this.rearrange(slot)]);
+
         new ResizeObserver(([entry]) => {
             let newWidth = entry.borderBoxSize[0].inlineSize;
             newWidth != this.#oldWidth && this.rearrange();
@@ -35,18 +41,17 @@ customElements.define(tagName, class extends HTMLElement {
         isNaN(E_this.get('--gap')) && E_this.set({'--gap': '.5em'});
         setTimeout(() => this.hidden = false, 1000);
     }
-    shape (ev) {
-        ev.target.assignedElements().forEach(el => el.tagName == 'IMG' || el.Q('shape') || 
+    shape (slot) {
+        slot.assignedElements().forEach(el => el.tagName == 'IMG' || el.Q('shape') || 
             el.prepend(...[0,0].map(_ => E('span', {classList: 'shape'})))
         );
     }
-    async rearrange(ev) {
-        let items = ev?.target.assignedElements() ?? [...this.children];
+    rearrange(slot) {
+        let items = slot?.assignedElements() ?? [...this.children];
         items.forEach(item => E(item).set(this.#reset));
         items = items.filter(item => !item.hidden);
         if (!items.length) return;
 
-        await new Promise(res => setTimeout(res));
         let W = this.getBoundingClientRect().width,
             g = parseFloat(getComputedStyle(this).gap),
             w = items[0].getBoundingClientRect().width;
