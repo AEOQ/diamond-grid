@@ -36,7 +36,9 @@ customElements.define(tagName, class extends HTMLElement {
         setTimeout(() => this.hidden = false, 1000);
     }
     shape (ev) {
-        ev.target.assignedElements().forEach(el => el.Q('shape') || el.prepend(...[0,0].map(_ => E('span', {classList: 'shape'}))));
+        ev.target.assignedElements().forEach(el => el.tagName == 'IMG' || el.Q('shape') || 
+            el.prepend(...[0,0].map(_ => E('span', {classList: 'shape'})))
+        );
     }
     async rearrange(ev) {
         let items = ev?.target.assignedElements() ?? [...this.children];
@@ -45,8 +47,7 @@ customElements.define(tagName, class extends HTMLElement {
         if (!items.length) return;
 
         this.style.visibility = 'hidden';
-        let img = items[0].tagName == 'IMG' ? items[0] : items[0].Q('img');
-        await img ? new Promise(res => img.complete ? res() : img.onload = res) : Promise.resolve();
+        await new Promise(res => setTimeout(res));
         this.style.visibility = 'initial';
         
         let W = this.getBoundingClientRect().width,
